@@ -72,20 +72,8 @@ button {
         <button onclick="nextStep(5)">Qualcosa di più</button>
     </div>
 
-    <!-- ENIGMA -->
-    <div id="step5" class="hidden">
-        <p>Se 2 persone guadagnano 100€ in 2 ore,<br>
-        quanto guadagnano 4 persone in 2 ore?</p>
-
-        <button onclick="checkAnswer(200)">200</button><br>
-        <button onclick="checkAnswer(400)">400</button><br>
-        <button onclick="checkAnswer(100)">100</button>
-
-        <p id="error" style="color:red;"></p>
-    </div>
-
     <!-- FINALE -->
-    <div id="step6" class="hidden">
+    <div id="step5" class="hidden">
         <h2>Interessante.</h2>
         <p>Non cerchiamo curriculum.</p>
         <p>Scrivi "OLTRE" su WhatsApp.</p>
@@ -99,18 +87,10 @@ button {
 
 <script>
 function nextStep(step) {
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 5; i++) {
         document.getElementById("step" + i).classList.add("hidden");
     }
     document.getElementById("step" + step).classList.remove("hidden");
-}
-
-function checkAnswer(answer) {
-    if (answer === 200) {
-        nextStep(6);
-    } else {
-        document.getElementById("error").innerText = "Troppo veloce. Riprova.";
-    }
 }
 </script>
 
