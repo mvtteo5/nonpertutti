@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Non è per tutti</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 400px;
+}
+
+button {
+    padding: 15px 25px;
+    margin-top: 20px;
+    border: none;
+    background: white;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- STEP 1 -->
+    <div id="step1">
+        <h2>Hai fatto il primo passo.</h2>
+        <p>Ma non era per tutti.</p>
+        <button onclick="nextStep(2)">INIZIA</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" class="hidden">
+        <p>Preferisci:</p>
+        <button onclick="nextStep(3)">Sicurezza</button><br>
+        <button onclick="nextStep(3)">Guadagno</button><br>
+        <button onclick="nextStep(3)">Libertà</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step3" class="hidden">
+        <p>Se fallisci:</p>
+        <button onclick="nextStep(4)">Ti fermi</button><br>
+        <button onclick="nextStep(4)">Riprovi</button><br>
+        <button onclick="nextStep(4)">Cambi strategia</button>
+    </div>
+
+    <!-- STEP 4 -->
+    <div id="step4" class="hidden">
+        <p>Vuoi davvero diventare qualcuno o solo lavorare?</p>
+        <button onclick="nextStep(5)">Lavoro</button><br>
+        <button onclick="nextStep(5)">Qualcosa di più</button>
+    </div>
+
+    <!-- ENIGMA -->
+    <div id="step5" class="hidden">
+        <p>Se 2 persone guadagnano 100€ in 2 ore,<br>
+        quanto guadagnano 4 persone in 2 ore?</p>
+
+        <button onclick="checkAnswer(200)">200</button><br>
+        <button onclick="checkAnswer(400)">400</button><br>
+        <button onclick="checkAnswer(100)">100</button>
+
+        <p id="error" style="color:red;"></p>
+    </div>
+
+    <!-- FINALE -->
+    <div id="step6" class="hidden">
+        <h2>Interessante.</h2>
+        <p>Non cerchiamo curriculum.</p>
+        <p>Scrivi "OLTRE" su WhatsApp.</p>
+
+        <a href="https://wa.me/393520660305" target="_blank">
+            <button>CONTINUA</button>
+        </a>
+    </div>
+
+</div>
+
+<script>
+function nextStep(step) {
+    for (let i = 1; i <= 6; i++) {
+        document.getElementById("step" + i).classList.add("hidden");
+    }
+    document.getElementById("step" + step).classList.remove("hidden");
+}
+
+function checkAnswer(answer) {
+    if (answer === 200) {
+        nextStep(6);
+    } else {
+        document.getElementById("error").innerText = "Troppo veloce. Riprova.";
+    }
+}
+</script>
+
+</body>
+</html>
