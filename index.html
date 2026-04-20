@@ -16,10 +16,12 @@ body {
     align-items: center;
     height: 100vh;
     text-align: center;
+    overflow: hidden;
 }
 
 .container {
     max-width: 400px;
+    z-index: 2;
 }
 
 button {
@@ -35,63 +37,253 @@ button {
 .hidden {
     display: none;
 }
+
+/* =========================
+   GLITCH SHAPES BACKGROUND
+========================= */
+.glitch-shape {
+    position: absolute;
+    background: rgba(0,255,0,0.18);
+    pointer-events: none;
+    clip-path: polygon(
+        10% 0%, 90% 10%, 100% 40%,
+        80% 100%, 20% 90%, 0% 50%
+    );
+    animation: glitchMove 0.25s infinite;
+}
+
+@keyframes glitchMove {
+    0% { transform: translate(0,0); opacity: 0.2; }
+    25% { transform: translate(4px,-2px); opacity: 0.6; }
+    50% { transform: translate(-4px,3px); opacity: 0.3; }
+    75% { transform: translate(3px,-3px); opacity: 0.7; }
+    100% { transform: translate(0,0); opacity: 0.2; }
+}
+
+/* =========================
+   BRAND TEXT BACKGROUND (FIX OPACITY)
+========================= */
+.glitch-text-bg {
+    position: absolute;
+    color: rgba(0,255,0,1); /* 👈 OPACITÀ A PIENO */
+    font-size: 18px;
+    font-weight: bold;
+    pointer-events: none;
+    white-space: nowrap;
+    animation: brandFloat 1.2s linear forwards;
+}
+
+@keyframes brandFloat {
+    0% { transform: translateY(-20px); opacity: 0; }
+    20% { opacity: 1; } /* 👈 visibile subito */
+    100% { transform: translateY(80px); opacity: 0; }
+}
+
+/* =========================
+   TEXT GLITCH RGB
+========================= */
+.text-glitch {
+    position: relative;
+    animation: glitchText 0.12s;
+}
+
+@keyframes glitchText {
+    0% {
+        transform: translate(0);
+        text-shadow: 2px 0 red, -2px 0 lime;
+    }
+    25% {
+        transform: translate(-3px, 2px);
+        text-shadow: -2px 0 red, 2px 0 lime;
+    }
+    50% {
+        transform: translate(3px, -2px);
+        text-shadow: 2px 2px red, -2px -2px lime;
+    }
+    75% {
+        transform: translate(-2px, 1px);
+        text-shadow: -2px 2px red, 2px -2px lime;
+    }
+    100% {
+        transform: translate(0);
+        text-shadow: none;
+    }
+}
+
+/* =========================
+   FLASH CLICK EFFECT
+========================= */
+.flash {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:white;
+    opacity:0;
+    pointer-events:none;
+    z-index:999;
+    transition: opacity 0.1s;
+}
 </style>
 </head>
 
 <body>
 
+<div id="glitch-container"></div>
+<div class="flash" id="flash"></div>
+
 <div class="container">
 
-    <!-- STEP 1 -->
-    <div id="step1">
-        <h2>Hai fatto il primo passo.</h2>
-        <p>Ma non era per tutti.</p>
-        <button onclick="nextStep(2)">INIZIA</button>
-    </div>
+<div id="step1">
+    <h2 class="type">Hai fatto il primo passo.</h2>
+    <p class="type">Ma non era per tutti.</p>
+    <button onclick="nextStep(2)">INIZIA</button>
+</div>
 
-    <!-- STEP 2 -->
-    <div id="step2" class="hidden">
-        <p>Preferisci:</p>
-        <button onclick="nextStep(3)">Sicurezza</button><br>
-        <button onclick="nextStep(3)">Guadagno</button><br>
-        <button onclick="nextStep(3)">Libertà</button>
-    </div>
+<div id="step2" class="hidden">
+    <p class="type">Preferisci:</p>
+    <button onclick="nextStep(3)">Sicurezza</button><br>
+    <button onclick="nextStep(3)">Guadagno</button><br>
+    <button onclick="nextStep(3)">Libertà</button>
+</div>
 
-    <!-- STEP 3 -->
-    <div id="step3" class="hidden">
-        <p>Se fallisci:</p>
-        <button onclick="nextStep(4)">Ti fermi</button><br>
-        <button onclick="nextStep(4)">Riprovi</button><br>
-        <button onclick="nextStep(4)">Cambi strategia</button>
-    </div>
+<div id="step3" class="hidden">
+    <p class="type">Se fallisci:</p>
+    <button onclick="nextStep(4)">Ti fermi</button><br>
+    <button onclick="nextStep(4)">Riprovi</button><br>
+    <button onclick="nextStep(4)">Cambi strategia</button>
+</div>
 
-    <!-- STEP 4 -->
-    <div id="step4" class="hidden">
-        <p>Vuoi davvero diventare qualcuno o solo lavorare?</p>
-        <button onclick="nextStep(5)">Lavoro</button><br>
-        <button onclick="nextStep(5)">Qualcosa di più</button>
-    </div>
+<div id="step4" class="hidden">
+    <p class="type">Vuoi davvero diventare qualcuno o solo lavorare?</p>
+    <button onclick="nextStep(5)">Lavoro</button><br>
+    <button onclick="nextStep(5)">Qualcosa di più</button>
+</div>
 
-    <!-- FINALE -->
-    <div id="step5" class="hidden">
-        <h2>Interessante.</h2>
-        <p>Non cerchiamo curriculum.</p>
-        <p>Scrivi "OLTRE" su WhatsApp.</p>
+<div id="step5" class="hidden">
+    <h2 class="type">Interessante.</h2>
+    <p class="type">Non cerchiamo curriculum.</p>
+    <h2 class="type">Cerchiamo voglia di fare.</h2>
+    <h2 class="type">Voglia di diventare.</h2>
+    <p class="type">Premi su "CONTINUA" per ricevere indicazioni su whatsapp.</p>
 
-        <a href="https://wa.me/393520660305" target="_blank">
-            <button>CONTINUA</button>
-        </a>
-    </div>
+    <a href="https://wa.me/393520660305?text=Ciao!%20voglio%20partecipare%20al%20%23GOVERNAFlashMob" target="_blank">
+        <button>CONTINUA</button>
+    </a>
+</div>
 
 </div>
 
 <script>
+
+/* TYPEWRITER */
+function typeWriter(element, speed = 30) {
+    const text = element.textContent;
+    element.textContent = "";
+    let i = 0;
+
+    function write() {
+        if (i < text.length) {
+            element.textContent += text[i];
+            i++;
+            setTimeout(write, speed);
+        }
+    }
+    write();
+}
+
+function applyTypewriter(step) {
+    const elements = document.querySelectorAll("#step" + step + " .type");
+    elements.forEach(el => typeWriter(el));
+}
+
+/* FLASH + CLICK GLITCH */
+function flashEffect() {
+    const flash = document.getElementById("flash");
+    flash.style.opacity = 0.8;
+
+    setTimeout(() => flash.style.opacity = 0, 120);
+
+    document.body.classList.add("text-glitch");
+    setTimeout(() => document.body.classList.remove("text-glitch"), 150);
+}
+
+/* NAVIGATION */
 function nextStep(step) {
+    flashEffect();
+
     for (let i = 1; i <= 5; i++) {
         document.getElementById("step" + i).classList.add("hidden");
     }
+
     document.getElementById("step" + step).classList.remove("hidden");
+    applyTypewriter(step);
 }
+
+/* GLITCH BACKGROUND */
+const container = document.getElementById("glitch-container");
+
+function createGlitch() {
+    const shape = document.createElement("div");
+    shape.className = "glitch-shape";
+
+    shape.style.width = (60 + Math.random() * 180) + "px";
+    shape.style.height = (20 + Math.random() * 100) + "px";
+
+    shape.style.top = Math.random() * window.innerHeight + "px";
+    shape.style.left = Math.random() * window.innerWidth + "px";
+
+    container.appendChild(shape);
+
+    setTimeout(() => shape.remove(), 350);
+}
+
+function createBrand() {
+    const text = document.createElement("div");
+    text.className = "glitch-text-bg";
+    text.innerText = "#GOVERNAFlashMob";
+
+    text.style.top = Math.random() * window.innerHeight + "px";
+    text.style.left = Math.random() * window.innerWidth + "px";
+
+    container.appendChild(text);
+
+    setTimeout(() => text.remove(), 1200);
+}
+
+/* LOOP */
+setInterval(() => {
+    createGlitch();
+
+    if (Math.random() > 0.6) {
+        createBrand();
+    }
+
+}, 250);
+
+/* TEXT GLITCH */
+setInterval(() => {
+    const texts = document.querySelectorAll(".type");
+    if (texts.length === 0) return;
+
+    const count = Math.floor(Math.random() * 3) + 2;
+
+    for (let i = 0; i < count; i++) {
+        const el = texts[Math.floor(Math.random() * texts.length)];
+
+        el.classList.add("text-glitch");
+
+        setTimeout(() => {
+            el.classList.remove("text-glitch");
+        }, 120);
+    }
+
+}, 900);
+
+/* START */
+applyTypewriter(1);
+
 </script>
 
 </body>
